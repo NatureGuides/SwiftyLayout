@@ -1,5 +1,5 @@
 //
-//  UIView+Constraints.swift
+//  AutolayoutTarget+Constraints.swift
 //  AutolayoutHelpers
 //
 //  Created by Joe Thomson on 03/05/2020.
@@ -26,6 +26,7 @@ extension AutolayoutTarget
         return final
     }
     
+    /// Activate the given constraints and, if `self` is a view, set `translatesAutoresizingMaskIntoConstraints` to `false`.
     private func activateConstraints(_ constraints: [NSLayoutConstraint])
     {
         if let view = self as? UIView
