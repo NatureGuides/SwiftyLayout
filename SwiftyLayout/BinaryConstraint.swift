@@ -91,18 +91,18 @@ public enum BinaryConstraint
         case .fill(let inset):
             var constraints = [NSLayoutConstraint]()
             constraints.append(lhs.leadingAnchor.constraint(equalTo: rhs.leadingAnchor, constant: inset))
-            constraints.append(lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: inset))
+            constraints.append(lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: -inset))
             constraints.append(lhs.topAnchor.constraint(equalTo: rhs.topAnchor, constant: inset))
-            constraints.append(lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: inset))
+            constraints.append(lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: -inset))
             return constraints
         case .leading(let inset):
             return [lhs.leadingAnchor.constraint(equalTo: rhs.leadingAnchor, constant: inset)]
         case .trailing(let inset):
-            return [lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: inset)]
+            return [lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: -inset)]
         case .top(let inset):
             return [lhs.topAnchor.constraint(equalTo: rhs.topAnchor, constant: inset)]
         case .bottom(let inset):
-            return [lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: inset)]
+            return [lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: -inset)]
         case .width(let multiplier, let constant):
             return [lhs.widthAnchor.constraint(equalTo: rhs.widthAnchor, multiplier: multiplier, constant: constant)]
         case .height(let multiplier, let constant):
