@@ -42,25 +42,17 @@ extension AutolayoutTarget
         return self.constrain(priority: priority, [constraint]).first!
     }
     
-    /// Activate the given constraints and set `translatesAutoresizingMaskIntoConstraints` to `false` if possible.
+    /// Activates the given constraints and sets `translatesAutoresizingMaskIntoConstraints` to `false` if possible.
     private func activateConstraints(_ constraints: [NSLayoutConstraint], priority: UILayoutPriority)
     {
         if let view = self.underlyingView
         {
-            for constraint in constraints
-            {
-                constraint.priority = priority
-            }
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.addConstraints(constraints)
         }
-        else
+        for constraint in constraints
         {
-            for constraint in constraints
-            {
-                constraint.priority = priority
-                constraint.isActive = true
-            }
+            constraint.priority = priority
+            constraint.isActive = true
         }
     }
 }
