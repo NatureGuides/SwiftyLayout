@@ -19,6 +19,13 @@ extension AutolayoutTarget
         return final
     }
     
+    /// Constrains this view to another using the given constraint.
+    @discardableResult
+    public func constrain(to other: AutolayoutTarget, _ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    {
+        return self.constrain(to: other, [constraint])
+    }
+    
     /// Constrains this view using the given constraints.
     @discardableResult
     public func constrain(_ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
@@ -26,6 +33,13 @@ extension AutolayoutTarget
         let final = constraints.map{ $0.constraint(for: self) }
         self.activateConstraints(final)
         return final
+    }
+    
+    /// Constrains this view using the given constraint.
+    @discardableResult
+    public func constrain(_ constraint: UnaryConstraint) -> NSLayoutConstraint
+    {
+        return self.constrain([constraint]).first!
     }
     
     /// Activate the given constraints and set `translatesAutoresizingMaskIntoConstraints` to `false` if possible.
