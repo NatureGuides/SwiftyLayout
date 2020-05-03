@@ -60,7 +60,7 @@ enum BinaryConstraint
     static let height: BinaryConstraint = { .height(multiplier: 1) }()
     
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
-    func constraints(between lhs: UIView, and rhs: UIView) -> [NSLayoutConstraint]
+    func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {

@@ -21,16 +21,16 @@ enum UnaryConstraint
     case aspectRatio(_ value: CGFloat)
     
     /// Returns the single `NSLayoutConstraint` object represented by this constraint, for the given view.
-    func constraint(for view: UIView) -> NSLayoutConstraint
+    func constraint(for target: AutolayoutTarget) -> NSLayoutConstraint
     {
         switch self
         {
         case .width(let value):
-            return view.widthAnchor.constraint(equalToConstant: value)
+            return target.widthAnchor.constraint(equalToConstant: value)
         case .height(let value):
-            return view.heightAnchor.constraint(equalToConstant: value)
+            return target.heightAnchor.constraint(equalToConstant: value)
         case .aspectRatio(let value):
-            return view.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: value)
+            return target.widthAnchor.constraint(equalTo: target.heightAnchor, multiplier: value)
         }
     }
 }

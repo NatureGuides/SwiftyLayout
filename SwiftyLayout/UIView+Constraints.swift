@@ -8,14 +8,13 @@
 
 import UIKit
 
-extension UIView
+extension AutolayoutTarget
 {
     /// Constrains this view to another using the given constraints.
-    func constrain(to otherView: UIView, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
+    func constrain(to other: AutolayoutTarget, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
-        let final = constraints.flatMap{ $0.constraints(between: self, and: otherView) }
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addConstraints(final)
+        let final = constraints.flatMap{ $0.constraints(between: self, and: other) }
+        self.activateConstraints(final)
         return final
     }
     
@@ -23,9 +22,23 @@ extension UIView
     func constrain(_ constraints: UnaryConstraint...) -> [NSLayoutConstraint]
     {
         let final = constraints.map{ $0.constraint(for: self) }
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addConstraints(final)
+        self.activateConstraints(final)
         return final
     }
+    
+    private func activateConstraints(_ constraints: [NSLayoutConstraint])
+    {
+        if let view = self as? UIView
+        {
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.addConstraints(constraints)
+        }
+        else
+        {
+            for constraint in constraints
+            {
+                constraint.isActive = true
+            }
+        }
+    }
 }
-
