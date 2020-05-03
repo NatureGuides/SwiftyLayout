@@ -9,7 +9,7 @@
 import UIKit
 
 /// A protocol to allow us to mix and match between UIViews and UILayoutGuides.
-protocol AutolayoutTarget: class
+public protocol AutolayoutTarget: class
 {
     var leadingAnchor: NSLayoutXAxisAnchor { get }
     var trailingAnchor: NSLayoutXAxisAnchor { get }

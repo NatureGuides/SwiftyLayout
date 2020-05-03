@@ -9,7 +9,7 @@
 import UIKit
 
 /// A constraint involving two views.
-enum BinaryConstraint
+public enum BinaryConstraint
 {
     /// Constrains all four edges of one view to those of another, inset on each edge by a given value.
     case fill(inset: CGFloat)
@@ -39,28 +39,28 @@ enum BinaryConstraint
     case verticallyCentered
     
     /// Constrains all four edges of one view to those of another.
-    static let fill: BinaryConstraint = { .fill(inset: 0) }()
+    public static let fill: BinaryConstraint = { .fill(inset: 0) }()
     
     /// Constrains the leading edge of one view to that of another.
-    static let leading: BinaryConstraint = { .leading(inset: 0) }()
+    public static let leading: BinaryConstraint = { .leading(inset: 0) }()
     
     /// Constrains the trailing edge of one view to that of another.
-    static let trailing: BinaryConstraint = { .trailing(inset: 0) }()
+    public static let trailing: BinaryConstraint = { .trailing(inset: 0) }()
     
     /// Constrains the top edge of one view to that of another.
-    static let top: BinaryConstraint = { .top(inset: 0) }()
+    public static let top: BinaryConstraint = { .top(inset: 0) }()
     
     /// Constrains the bottom edge of one view to that of another.
-    static let bottom: BinaryConstraint = { .bottom(inset: 0) }()
+    public static let bottom: BinaryConstraint = { .bottom(inset: 0) }()
     
     /// Constrains the width of one view to that of another.
-    static let width: BinaryConstraint = { .width(multiplier: 1) }()
+    public static let width: BinaryConstraint = { .width(multiplier: 1) }()
     
     /// Constrains the height of one view to that of another.
-    static let height: BinaryConstraint = { .height(multiplier: 1) }()
+    public static let height: BinaryConstraint = { .height(multiplier: 1) }()
     
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
-    func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
+    internal func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {

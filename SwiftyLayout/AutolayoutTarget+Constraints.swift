@@ -11,7 +11,7 @@ import UIKit
 extension AutolayoutTarget
 {
     /// Constrains this view to another using the given constraints.
-    func constrain(to other: AutolayoutTarget, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
+    public func constrain(to other: AutolayoutTarget, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
     {
         let final = constraints.flatMap{ $0.constraints(between: self, and: other) }
         self.activateConstraints(final)
@@ -19,7 +19,7 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view using the given constraints.
-    func constrain(_ constraints: UnaryConstraint...) -> [NSLayoutConstraint]
+    public func constrain(_ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
     {
         let final = constraints.map{ $0.constraint(for: self) }
         self.activateConstraints(final)
