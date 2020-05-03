@@ -59,3 +59,40 @@ extension AutolayoutTarget
         }
     }
 }
+
+extension UIView
+{
+    /// Constrains this view to its superview using the given constraints.
+    @discardableResult
+    public func constrainToSuperview(_ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview, constraints)
+    }
+    
+    /// Constrains this view to its superview using the given constraint.
+    @discardableResult
+    public func constrainToSuperview(_ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview, constraint)
+    }
+    
+    /// Constrains this view to its superview's safe area using the given constraints.
+    @available(iOS 11.0, *)
+    @discardableResult
+    public func constrainToSuperviewSafeArea(_ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.safeAreaLayoutGuide, constraints)
+    }
+    
+    /// Constrains this view to its superview's safe area using the given constraint.
+    @available(iOS 11.0, *)
+    @discardableResult
+    public func constrainToSuperviewSafeArea(_ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.safeAreaLayoutGuide, constraint)
+    }
+}
