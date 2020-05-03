@@ -26,11 +26,11 @@ public enum BinaryConstraint
     /// Constrains the bottom edge of one view to that of another, inset by a given value.
     case bottom(inset: CGFloat)
     
-    /// Constrains the width of one view to that of another, multiplied by a given value.
-    case width(multiplier: CGFloat)
+    /// Constrains the width of one view to that of another, altered by the given multiplier and constant.
+    case width(multiplier: CGFloat, constant: CGFloat)
     
-    /// Constrains the height of one view to that of another, multiplied by a given value
-    case height(multiplier: CGFloat)
+    /// Constrains the height of one view to that of another, altered by the given multiplier and constant.
+    case height(multiplier: CGFloat, constant: CGFloat)
     
     /// Horizontally centers one view inside another.
     case horizontallyCentered
@@ -54,10 +54,34 @@ public enum BinaryConstraint
     public static let bottom: BinaryConstraint = { .bottom(inset: 0) }()
     
     /// Constrains the width of one view to that of another.
-    public static let width: BinaryConstraint = { .width(multiplier: 1) }()
+    public static let width: BinaryConstraint = { .width(multiplier: 1, constant: 0) }()
+    
+    /// Constrains the width of one view to that of another, altered by the given multiplier.
+    public static func width(multiplier: CGFloat) -> BinaryConstraint
+    {
+        .width(multiplier: multiplier, constant: 0)
+    }
+    
+    /// Constrains the width of one view to that of another, altered by the given constant .
+    public static func width(constant: CGFloat) -> BinaryConstraint
+    {
+        .width(multiplier: 1, constant: constant)
+    }
     
     /// Constrains the height of one view to that of another.
-    public static let height: BinaryConstraint = { .height(multiplier: 1) }()
+    public static let height: BinaryConstraint = { .height(multiplier: 1, constant: 0) }()
+    
+    /// Constrains the height of one view to that of another, altered by the given multiplier .
+    public static func height(multiplier: CGFloat) -> BinaryConstraint
+    {
+        .height(multiplier: multiplier, constant: 0)
+    }
+    
+    /// Constrains the height of one view to that of another, altered by the given constant .
+    public static func height(constant: CGFloat) -> BinaryConstraint
+    {
+        .height(multiplier: 1, constant: constant)
+    }
     
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
     internal func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
@@ -79,10 +103,10 @@ public enum BinaryConstraint
             return [lhs.topAnchor.constraint(equalTo: rhs.topAnchor, constant: inset)]
         case .bottom(let inset):
             return [lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: inset)]
-        case .width(let multiplier):
-            return [lhs.widthAnchor.constraint(equalTo: rhs.widthAnchor, multiplier: multiplier)]
-        case .height(let multiplier):
-            return [lhs.heightAnchor.constraint(equalTo: rhs.heightAnchor, multiplier: multiplier)]
+        case .width(let multiplier, let constant):
+            return [lhs.widthAnchor.constraint(equalTo: rhs.widthAnchor, multiplier: multiplier, constant: constant)]
+        case .height(let multiplier, let constant):
+            return [lhs.heightAnchor.constraint(equalTo: rhs.heightAnchor, multiplier: multiplier, constant: constant)]
         case .horizontallyCentered:
             return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor)]
         case .verticallyCentered:
