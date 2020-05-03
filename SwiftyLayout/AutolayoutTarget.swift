@@ -11,6 +11,8 @@ import UIKit
 /// A protocol to allow us to mix and match between UIViews and UILayoutGuides.
 public protocol AutolayoutTarget: class
 {
+    var underlyingView: UIView? { get }
+    
     var leadingAnchor: NSLayoutXAxisAnchor { get }
     var trailingAnchor: NSLayoutXAxisAnchor { get }
     var leftAnchor: NSLayoutXAxisAnchor { get }
@@ -24,5 +26,18 @@ public protocol AutolayoutTarget: class
     var heightAnchor: NSLayoutDimension { get }
 }
 
-extension UIView: AutolayoutTarget { }
-extension UILayoutGuide: AutolayoutTarget { }
+extension UIView: AutolayoutTarget
+{
+    public var underlyingView: UIView?
+    {
+        return self
+    }
+}
+
+extension UILayoutGuide: AutolayoutTarget
+{
+    public var underlyingView: UIView?
+    {
+        self.owningView
+    }
+}

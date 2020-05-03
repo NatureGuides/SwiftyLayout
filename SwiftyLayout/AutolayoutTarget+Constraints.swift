@@ -28,10 +28,10 @@ extension AutolayoutTarget
         return final
     }
     
-    /// Activate the given constraints and, if `self` is a view, set `translatesAutoresizingMaskIntoConstraints` to `false`.
+    /// Activate the given constraints and set `translatesAutoresizingMaskIntoConstraints` to `false` if possible.
     private func activateConstraints(_ constraints: [NSLayoutConstraint])
     {
-        if let view = self as? UIView
+        if let view = self.underlyingView
         {
             view.translatesAutoresizingMaskIntoConstraints = false
             view.addConstraints(constraints)
