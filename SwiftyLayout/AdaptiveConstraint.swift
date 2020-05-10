@@ -30,6 +30,24 @@ public class AdaptiveConstraint: NSObject
         }
     }
     
+    /// Constrains between the two given views by different constraints in horizontally regular and horizontally compact environments.
+    public static func horizontally(regular: BinaryConstraint, compact: BinaryConstraint, between view: UIView, and other: AutolayoutTarget) -> AdaptiveConstraint
+    {
+        AdaptiveConstraint(view: view) { traitCollection in
+            let constraint: BinaryConstraint
+            switch traitCollection.horizontalSizeClass
+            {
+            case .regular, .unspecified:
+                constraint = regular
+            case .compact:
+                constraint = compact
+            @unknown default:
+                constraint = regular
+            }
+            return view.constrain(to: other, constraint)
+        }
+    }
+    
     /// The view to apply the given constraints to.
     let view: UIView
     
