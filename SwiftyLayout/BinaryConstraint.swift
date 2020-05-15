@@ -12,7 +12,7 @@ import UIKit
 public enum BinaryConstraint
 {
     /// Constrains all four edges of one view to those of another, inset on each edge by a given value.
-    case fill(inset: CGFloat)
+    case fill(insets: UIEdgeInsets)
     
     /// Constrains the leading edge of one view to that of another, inset by a given value.
     case leading(inset: CGFloat)
@@ -38,8 +38,14 @@ public enum BinaryConstraint
     /// Vertically centers one view inside another.
     case verticallyCentered
     
+    public static func fill(inset: CGFloat) -> BinaryConstraint
+    {
+        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        return .fill(insets: insets)
+    }
+    
     /// Constrains all four edges of one view to those of another.
-    public static let fill: BinaryConstraint = { .fill(inset: 0) }()
+    public static let fill: BinaryConstraint = { .fill(insets: .zero) }()
     
     /// Constrains the leading edge of one view to that of another.
     public static let leading: BinaryConstraint = { .leading(inset: 0) }()
@@ -88,12 +94,12 @@ public enum BinaryConstraint
     {
         switch self
         {
-        case .fill(let inset):
+        case .fill(let insets):
             var constraints = [NSLayoutConstraint]()
-            constraints.append(lhs.leadingAnchor.constraint(equalTo: rhs.leadingAnchor, constant: inset))
-            constraints.append(lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: -inset))
-            constraints.append(lhs.topAnchor.constraint(equalTo: rhs.topAnchor, constant: inset))
-            constraints.append(lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: -inset))
+            constraints.append(lhs.leadingAnchor.constraint(equalTo: rhs.leadingAnchor, constant: insets.left))
+            constraints.append(lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: -insets.right))
+            constraints.append(lhs.topAnchor.constraint(equalTo: rhs.topAnchor, constant: insets.top))
+            constraints.append(lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: -insets.bottom))
             return constraints
         case .leading(let inset):
             return [lhs.leadingAnchor.constraint(equalTo: rhs.leadingAnchor, constant: inset)]
