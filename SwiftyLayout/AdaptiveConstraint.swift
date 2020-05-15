@@ -48,6 +48,15 @@ public class AdaptiveConstraint: NSObject
         }
     }
     
+    @available(iOS 11.0, *)
+    public static func scale(_ constraint: UnaryConstraint, with textStyle: UIFont.TextStyle, for view: UIView) -> AdaptiveConstraint
+    {
+        AdaptiveConstraint(view: view) { traitCollection in
+            let scaledConstraint = constraint.scaled(by: textStyle)
+            return view.constrain(scaledConstraint)
+        }
+    }
+    
     /// The view to apply the given constraints to.
     let view: UIView
     
@@ -76,5 +85,31 @@ public class AdaptiveConstraint: NSObject
     public func traitCollectionDidChange()
     {
         self.currentConstraints = self.constraintsForTraitCollection(self.view.traitCollection)
+    }
+}
+
+extension UnaryConstraint
+{
+    @available(iOS 11.0, *)
+    func scaled(by textStyle: UIFont.TextStyle, compatibleWith traitCollection: UITraitCollection? = nil) -> UnaryConstraint
+    {
+        let metrics = UIFontMetrics(forTextStyle: textStyle)
+        switch self
+        {
+        case .width(let value, let kind):
+            let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
+            return .width(scaledValue, kind)
+        case .height(let value, let kind):
+            let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
+            return .height(scaledValue, kind)
+        case .size(let value, let kind):
+            let scaledWidth = metrics.scaledValue(for: value.width, compatibleWith: traitCollection)
+            let scaledHeight = metrics.scaledValue(for: value.height, compatibleWith: traitCollection)
+            let scaledValue = CGSize(width: scaledWidth, height: scaledHeight)
+            return .size(scaledValue, kind)
+        case .aspectRatio(let value, let kind):
+            let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
+            return .aspectRatio(scaledValue, kind)
+        }
     }
 }
