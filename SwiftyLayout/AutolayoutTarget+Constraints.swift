@@ -19,27 +19,27 @@ extension AutolayoutTarget
         return final
     }
     
-    /// Constrains this view to another using the given constraint.
+    /// Constrains this view to another using the given constraints.
     @discardableResult
-    public func constrain(to other: AutolayoutTarget, priority: UILayoutPriority = .required, _ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    public func constrain(to other: AutolayoutTarget, priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
-        return self.constrain(to: other, priority: priority, [constraint])
+        return self.constrain(to: other, priority: priority, constraints)
     }
     
     /// Constrains this view using the given constraints.
     @discardableResult
     public func constrain(priority: UILayoutPriority = .required, _ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
     {
-        let final = constraints.map{ $0.constraint(for: self) }
+        let final = constraints.flatMap{ $0.constraint(for: self) }
         self.activateConstraints(final, priority: priority)
         return final
     }
     
-    /// Constrains this view using the given constraint.
+    /// Constrains this view using the given constraints.
     @discardableResult
-    public func constrain(priority: UILayoutPriority = .required, _ constraint: UnaryConstraint) -> NSLayoutConstraint
+    public func constrain(priority: UILayoutPriority = .required, _ constraints: UnaryConstraint...) -> [NSLayoutConstraint]
     {
-        return self.constrain(priority: priority, [constraint]).first!
+        return self.constrain(priority: priority, constraints)
     }
     
     /// Activates the given constraints and sets `translatesAutoresizingMaskIntoConstraints` to `false` if possible.

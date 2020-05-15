@@ -47,8 +47,8 @@ public enum UnaryConstraint
     /// Constrains a view to a square aspect ratio.
     public static let squareAspectRatio: UnaryConstraint = { .aspectRatio(1, .equalTo) }()
     
-    /// Returns the single `NSLayoutConstraint` object represented by this constraint, for the given view.
-    internal func constraint(for target: AutolayoutTarget) -> NSLayoutConstraint
+    /// Returns the `NSLayoutConstraint` objects represented by this constraint, for the given view.
+    internal func constraint(for target: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {
@@ -56,31 +56,31 @@ public enum UnaryConstraint
             switch kind
             {
             case .equalTo:
-                return target.widthAnchor.constraint(equalToConstant: value)
+                return [target.widthAnchor.constraint(equalToConstant: value)]
             case .greaterThan:
-                return target.widthAnchor.constraint(greaterThanOrEqualToConstant: value)
+                return [target.widthAnchor.constraint(greaterThanOrEqualToConstant: value)]
             case .lessThan:
-                return target.widthAnchor.constraint(lessThanOrEqualToConstant: value)
+                return [target.widthAnchor.constraint(lessThanOrEqualToConstant: value)]
             }
         case .height(let value, let kind):
             switch kind
             {
             case .equalTo:
-                return target.heightAnchor.constraint(equalToConstant: value)
+                return [target.heightAnchor.constraint(equalToConstant: value)]
             case .greaterThan:
-                return target.heightAnchor.constraint(greaterThanOrEqualToConstant: value)
+                return [target.heightAnchor.constraint(greaterThanOrEqualToConstant: value)]
             case .lessThan:
-                return target.heightAnchor.constraint(lessThanOrEqualToConstant: value)
+                return [target.heightAnchor.constraint(lessThanOrEqualToConstant: value)]
             }
         case .aspectRatio(let value, let kind):
             switch kind
             {
             case .equalTo:
-                return target.widthAnchor.constraint(equalTo: target.heightAnchor, multiplier: value)
+                return [target.widthAnchor.constraint(equalTo: target.heightAnchor, multiplier: value)]
             case .greaterThan:
-                return target.widthAnchor.constraint(greaterThanOrEqualTo: target.heightAnchor, multiplier: value)
+                return [target.widthAnchor.constraint(greaterThanOrEqualTo: target.heightAnchor, multiplier: value)]
             case .lessThan:
-                return target.widthAnchor.constraint(lessThanOrEqualTo: target.heightAnchor, multiplier: value)
+                return [target.widthAnchor.constraint(lessThanOrEqualTo: target.heightAnchor, multiplier: value)]
             }
         }
     }

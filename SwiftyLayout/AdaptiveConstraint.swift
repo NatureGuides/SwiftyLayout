@@ -26,7 +26,7 @@ public class AdaptiveConstraint: NSObject
             @unknown default:
                 constraint = regular
             }
-            return [view.constrain(constraint)]
+            return view.constrain(constraint)
         }
     }
     
