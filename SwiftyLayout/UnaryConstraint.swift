@@ -86,15 +86,15 @@ public enum UnaryConstraint
             {
             case .equalTo:
                 let width = target.widthAnchor.constraint(equalToConstant: value.width)
-                let height = target.widthAnchor.constraint(equalToConstant: value.height)
+                let height = target.heightAnchor.constraint(equalToConstant: value.height)
                 return [width, height]
             case .greaterThan:
                 let width = target.widthAnchor.constraint(greaterThanOrEqualToConstant: value.width)
-                let height = target.widthAnchor.constraint(greaterThanOrEqualToConstant: value.height)
+                let height = target.heightAnchor.constraint(greaterThanOrEqualToConstant: value.height)
                 return [width, height]
             case .lessThan:
                 let width = target.widthAnchor.constraint(lessThanOrEqualToConstant: value.width)
-                let height = target.widthAnchor.constraint(lessThanOrEqualToConstant: value.height)
+                let height = target.heightAnchor.constraint(lessThanOrEqualToConstant: value.height)
                 return [width, height]
             }
         case .aspectRatio(let value, let kind):
