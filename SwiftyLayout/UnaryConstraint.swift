@@ -23,6 +23,9 @@ public enum UnaryConstraint
     /// Constrains a view to a given height.
     case height(_ value: CGFloat, _ kind: Kind)
     
+    /// Constrains a view to a given size.
+    case size(_ value: CGSize, _ kind: Kind)
+    
     /// Constrains a view to a given aspect ratio.
     case aspectRatio(_ value: CGFloat, _ kind: Kind)
     
@@ -36,6 +39,12 @@ public enum UnaryConstraint
     public static func height(_ value: CGFloat) -> UnaryConstraint
     {
         .height(value, .equalTo)
+    }
+    
+    /// Constrains a view to a given size.
+    public static func size(_ value: CGSize) -> UnaryConstraint
+    {
+        .size(value, .equalTo)
     }
     
     /// Constrains a view to a given aspect ratio.
@@ -71,6 +80,22 @@ public enum UnaryConstraint
                 return [target.heightAnchor.constraint(greaterThanOrEqualToConstant: value)]
             case .lessThan:
                 return [target.heightAnchor.constraint(lessThanOrEqualToConstant: value)]
+            }
+        case .size(let value, let kind):
+            switch kind
+            {
+            case .equalTo:
+                let width = target.widthAnchor.constraint(equalToConstant: value.width)
+                let height = target.widthAnchor.constraint(equalToConstant: value.height)
+                return [width, height]
+            case .greaterThan:
+                let width = target.widthAnchor.constraint(greaterThanOrEqualToConstant: value.width)
+                let height = target.widthAnchor.constraint(greaterThanOrEqualToConstant: value.height)
+                return [width, height]
+            case .lessThan:
+                let width = target.widthAnchor.constraint(lessThanOrEqualToConstant: value.width)
+                let height = target.widthAnchor.constraint(lessThanOrEqualToConstant: value.height)
+                return [width, height]
             }
         case .aspectRatio(let value, let kind):
             switch kind
