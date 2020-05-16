@@ -12,7 +12,7 @@ extension AutolayoutTarget
 {
     /// Constrains this view to another using the given constraints.
     @discardableResult
-    public func constrain(to other: AutolayoutTarget, priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
+    fileprivate func constrain(to other: AutolayoutTarget, priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
     {
         let final = constraints.flatMap{ $0.constraints(between: self, and: other) }
         self.activateConstraints(final, priority: priority)
@@ -28,7 +28,7 @@ extension AutolayoutTarget
     
     /// Constrains this view using the given constraints.
     @discardableResult
-    public func constrain(priority: UILayoutPriority = .required, _ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
+    fileprivate func constrain(priority: UILayoutPriority = .required, _ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
     {
         let final = constraints.flatMap{ $0.constraint(for: self) }
         self.activateConstraints(final, priority: priority)
