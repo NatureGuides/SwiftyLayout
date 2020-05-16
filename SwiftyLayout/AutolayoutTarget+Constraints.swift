@@ -67,12 +67,12 @@ extension UIView
         return self.constrain(to: superview, priority: priority, constraints)
     }
     
-    /// Constrains this view to its superview using the given constraint.
+    /// Constrains this view to its superview using the given constraints.
     @discardableResult
-    public func constrainToSuperview(priority: UILayoutPriority = .required, _ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    public func constrainToSuperview(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
         guard let superview = self.superview else { return [] }
-        return self.constrain(to: superview, priority: priority, constraint)
+        return self.constrain(to: superview, priority: priority, constraints)
     }
     
     /// Constrains this view to its superview's safe area using the given constraints.
@@ -84,12 +84,12 @@ extension UIView
         return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, constraints)
     }
     
-    /// Constrains this view to its superview's safe area using the given constraint.
+    /// Constrains this view to its superview's safe area using the given constraints.
     @available(iOS 11.0, *)
     @discardableResult
-    public func constrainToSuperviewSafeArea(priority: UILayoutPriority = .required, _ constraint: BinaryConstraint) -> [NSLayoutConstraint]
+    public func constrainToSuperviewSafeArea(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
         guard let superview = self.superview else { return [] }
-        return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, constraint)
+        return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, constraints)
     }
 }
