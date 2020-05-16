@@ -147,9 +147,9 @@ public enum BinaryConstraint
             case .equalTo:
                 return [lhs.trailingAnchor.constraint(equalTo: rhs.trailingAnchor, constant: -inset)]
             case .lessThan:
-                return [lhs.trailingAnchor.constraint(lessThanOrEqualTo: rhs.trailingAnchor, constant: -inset)]
-            case .greaterThan:
                 return [lhs.trailingAnchor.constraint(greaterThanOrEqualTo: rhs.trailingAnchor, constant: -inset)]
+            case .greaterThan:
+                return [lhs.trailingAnchor.constraint(lessThanOrEqualTo: rhs.trailingAnchor, constant: -inset)]
             }
         case .top(let inset, let kind):
             switch kind
@@ -167,9 +167,9 @@ public enum BinaryConstraint
             case .equalTo:
                 return [lhs.bottomAnchor.constraint(equalTo: rhs.bottomAnchor, constant: -inset)]
             case .lessThan:
-                return [lhs.bottomAnchor.constraint(lessThanOrEqualTo: rhs.bottomAnchor, constant: -inset)]
-            case .greaterThan:
                 return [lhs.bottomAnchor.constraint(greaterThanOrEqualTo: rhs.bottomAnchor, constant: -inset)]
+            case .greaterThan:
+                return [lhs.bottomAnchor.constraint(lessThanOrEqualTo: rhs.bottomAnchor, constant: -inset)]
             }
         case .width(let multiplier, let constant, let kind):
             switch kind
