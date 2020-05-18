@@ -26,6 +26,18 @@ public enum BinaryConstraint
     /// Constrains the bottom edge of one view to that of another, inset by a given value.
     case bottom(inset: CGFloat, _ type: ConstraintType)
     
+    /// Constraints the top of one view to the bottom of another, padded by a given value.
+    case verticalSpacingTop(_: CGFloat, _ type: ConstraintType)
+    
+    /// Constraints the bottom of one view to the top of another, padded by a given value.
+    case verticalSpacingBottom(_: CGFloat, _ type: ConstraintType)
+    
+    /// Constraints the leading edge of one view to the trailing edge of another, padded by a given value.
+    case horizontalSpacingLeading(_: CGFloat, _ type: ConstraintType)
+    
+    /// Constraints the trailing edge of one view to the leading edge of another, padded by a given value.
+    case horizontalSpacingTrailing(_: CGFloat, _ type: ConstraintType)
+    
     /// Constrains the width of one view to that of another, altered by the given multiplier and constant.
     case width(multiplier: CGFloat, constant: CGFloat, _ type: ConstraintType)
     
@@ -83,6 +95,18 @@ public enum BinaryConstraint
     /// Constrains the bottom edge of one view to that of another.
     public static let bottom: BinaryConstraint = { .bottom(inset: 0, .equalTo) }()
     
+    /// Constraints the top of one view to the bottom of another.
+    public static let verticalSpacingTop: BinaryConstraint = { .verticalSpacingTop(0, .equalTo) }()
+    
+    /// Constraints the bottom of one view to the top of another.
+    public static let verticalSpacingBottom: BinaryConstraint = { .verticalSpacingBottom(0, .equalTo) }()
+    
+    /// Constraints the leading edge of one view to the trailing edge of another.
+    public static let horizontalSpacingLeading: BinaryConstraint = { .horizontalSpacingLeading(0, .equalTo) }()
+    
+    /// Constraints the trailing edge of one view to the leading edge of another.
+    public static let horizontalSpacingTrailing: BinaryConstraint = { .horizontalSpacingTrailing(0, .equalTo) }()
+    
     /// Constrains the width of one view to that of another.
     public static let width: BinaryConstraint = { .width(multiplier: 1, constant: 0, .equalTo) }()
     
@@ -133,6 +157,14 @@ public enum BinaryConstraint
             return [lhs.topAnchor.constraint(to: rhs.topAnchor, type: type, constant: inset)]
         case .bottom(let inset, let type):
             return [lhs.bottomAnchor.constraint(to: rhs.bottomAnchor, type: type, constant: inset)]
+        case .verticalSpacingTop(let padding, let type):
+            return [lhs.topAnchor.constraint(to: rhs.bottomAnchor, type: type, constant: padding)]
+        case .verticalSpacingBottom(let padding, let type):
+            return [lhs.bottomAnchor.constraint(to: rhs.topAnchor, type: type, constant: padding)]
+        case .horizontalSpacingLeading(let padding, let type):
+            return [lhs.leadingAnchor.constraint(to: rhs.trailingAnchor, type: type, constant: padding)]
+        case .horizontalSpacingTrailing(let padding, let type):
+            return [lhs.trailingAnchor.constraint(to: rhs.leadingAnchor, type: type, constant: padding)]
         case .width(let multiplier, let constant, let type):
             return [lhs.widthAnchor.constraint(to: rhs.widthAnchor, type: type, multiplier: multiplier, constant: constant)]
         case .height(let multiplier, let constant, let type):
