@@ -96,20 +96,20 @@ extension UnaryConstraint
         let metrics = UIFontMetrics(forTextStyle: textStyle)
         switch self
         {
-        case .width(let value, let kind):
+        case .width(let value, let type):
             let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
-            return .width(scaledValue, kind)
-        case .height(let value, let kind):
+            return .width(scaledValue, type)
+        case .height(let value, let type):
             let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
-            return .height(scaledValue, kind)
-        case .size(let value, let kind):
+            return .height(scaledValue, type)
+        case .size(let value, let type):
             let scaledWidth = metrics.scaledValue(for: value.width, compatibleWith: traitCollection)
             let scaledHeight = metrics.scaledValue(for: value.height, compatibleWith: traitCollection)
             let scaledValue = CGSize(width: scaledWidth, height: scaledHeight)
-            return .size(scaledValue, kind)
-        case .aspectRatio(let value, let kind):
+            return .size(scaledValue, type)
+        case .aspectRatio(let value, let type):
             let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
-            return .aspectRatio(scaledValue, kind)
+            return .aspectRatio(scaledValue, type)
         }
     }
 }

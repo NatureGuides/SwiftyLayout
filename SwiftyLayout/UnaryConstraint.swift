@@ -11,23 +11,17 @@ import UIKit
 /// A constraint involving only one view.
 public enum UnaryConstraint
 {
-    /// A type to apply to unary constraints.
-    public enum Kind
-    {
-        case equalTo, greaterThan, lessThan
-    }
-    
     /// Constrains a view to a given width.
-    case width(_ value: CGFloat, _ kind: Kind)
+    case width(_ value: CGFloat, _ type: ConstraintType)
     
     /// Constrains a view to a given height.
-    case height(_ value: CGFloat, _ kind: Kind)
+    case height(_ value: CGFloat, _ type: ConstraintType)
     
     /// Constrains a view to a given size.
-    case size(_ value: CGSize, _ kind: Kind)
+    case size(_ value: CGSize, _ type: ConstraintType)
     
     /// Constrains a view to a given aspect ratio.
-    case aspectRatio(_ value: CGFloat, _ kind: Kind)
+    case aspectRatio(_ value: CGFloat, _ type: ConstraintType)
     
     /// Constrains a view to a given width.
     public static func width(_ value: CGFloat) -> UnaryConstraint
@@ -61,52 +55,16 @@ public enum UnaryConstraint
     {
         switch self
         {
-        case .width(let value, let kind):
-            switch kind
-            {
-            case .equalTo:
-                return [target.widthAnchor.constraint(equalToConstant: value)]
-            case .greaterThan:
-                return [target.widthAnchor.constraint(greaterThanOrEqualToConstant: value)]
-            case .lessThan:
-                return [target.widthAnchor.constraint(lessThanOrEqualToConstant: value)]
-            }
-        case .height(let value, let kind):
-            switch kind
-            {
-            case .equalTo:
-                return [target.heightAnchor.constraint(equalToConstant: value)]
-            case .greaterThan:
-                return [target.heightAnchor.constraint(greaterThanOrEqualToConstant: value)]
-            case .lessThan:
-                return [target.heightAnchor.constraint(lessThanOrEqualToConstant: value)]
-            }
-        case .size(let value, let kind):
-            switch kind
-            {
-            case .equalTo:
-                let width = target.widthAnchor.constraint(equalToConstant: value.width)
-                let height = target.heightAnchor.constraint(equalToConstant: value.height)
-                return [width, height]
-            case .greaterThan:
-                let width = target.widthAnchor.constraint(greaterThanOrEqualToConstant: value.width)
-                let height = target.heightAnchor.constraint(greaterThanOrEqualToConstant: value.height)
-                return [width, height]
-            case .lessThan:
-                let width = target.widthAnchor.constraint(lessThanOrEqualToConstant: value.width)
-                let height = target.heightAnchor.constraint(lessThanOrEqualToConstant: value.height)
-                return [width, height]
-            }
-        case .aspectRatio(let value, let kind):
-            switch kind
-            {
-            case .equalTo:
-                return [target.widthAnchor.constraint(equalTo: target.heightAnchor, multiplier: value)]
-            case .greaterThan:
-                return [target.widthAnchor.constraint(greaterThanOrEqualTo: target.heightAnchor, multiplier: value)]
-            case .lessThan:
-                return [target.widthAnchor.constraint(lessThanOrEqualTo: target.heightAnchor, multiplier: value)]
-            }
+        case .width(let value, let type):
+            return [target.widthAnchor.constraint(type: type, constant: value)]
+        case .height(let value, let type):
+            return [target.heightAnchor.constraint(type: type, constant: value)]
+        case .size(let value, let type):
+            let width = target.widthAnchor.constraint(type: type, constant: value.width)
+            let height = target.heightAnchor.constraint(type: type, constant: value.height)
+            return [width, height]
+        case .aspectRatio(let value, let type):
+            return [target.widthAnchor.constraint(to: target.heightAnchor, type: type, multiplier: value, constant: 0)]
         }
     }
 }
