@@ -97,6 +97,7 @@ public class AdaptiveConstraint: NSObject
         self.view.ifSafeSet(translatesAutoresizingMaskIntoConstraints: false)
         self.constraintsForTraitCollection = constraintsForTraitCollection
         self.currentConstraints = self.constraintsForTraitCollection(self.view.traitCollection)
+        self.currentConstraints.forEach{ $0.isActive = true }
         super.init()
     }
     
