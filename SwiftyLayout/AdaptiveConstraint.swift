@@ -12,12 +12,21 @@ import UIKit
 /// - Note: `traitCollectionDidChange` **must** be called by the relevant view every time the trait collection changes.
 public class AdaptiveConstraint: NSObject
 {
-    /// Constrains the given view by different constraints in horizontally regular and horizontally compact environments.
-    public static func horizontally(regular: UnaryConstraint, compact: UnaryConstraint, for view: UIView) -> AdaptiveConstraint
+    public static func `for`(_ view: UIView, _ kind: UnaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    {
+        AdaptiveConstraint(view: view) { traitCollection in
+            let constant = value.value(for: traitCollection)
+            let constraint = kind.with(value: constant)
+            return view.constrain(constraint)
+        }
+    }
+    
+    /// Constrains the given view by different constraints in regular and compact environments.
+    public static func `for`(_ view: UIView, regular: UnaryConstraint, compact: UnaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constraint: UnaryConstraint
-            switch traitCollection.horizontalSizeClass
+            switch dimension.sizeClass(from: traitCollection)
             {
             case .regular, .unspecified:
                 constraint = regular
@@ -30,12 +39,21 @@ public class AdaptiveConstraint: NSObject
         }
     }
     
-    /// Constrains between the two given views by different constraints in horizontally regular and horizontally compact environments.
-    public static func horizontally(regular: BinaryConstraint, compact: BinaryConstraint, between view: UIView, and other: AutolayoutTarget) -> AdaptiveConstraint
+    public static func between(_ view: UIView, and otherView: AutolayoutTarget, _ kind: BinaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    {
+        AdaptiveConstraint(view: view) { traitCollection in
+            let constant = value.value(for: traitCollection)
+            let constraint = kind.with(value: constant)
+            return view.constrain(to: otherView, constraint)
+        }
+    }
+    
+    /// Constrains between the two given views by different constraints in regular and compact environments.
+    public static func between(_ view: UIView, and otherView: AutolayoutTarget, regular: BinaryConstraint, compact: BinaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constraint: BinaryConstraint
-            switch traitCollection.horizontalSizeClass
+            switch dimension.sizeClass(from: traitCollection)
             {
             case .regular, .unspecified:
                 constraint = regular
@@ -44,7 +62,7 @@ public class AdaptiveConstraint: NSObject
             @unknown default:
                 constraint = regular
             }
-            return view.constrain(to: other, constraint)
+            return view.constrain(to: otherView, constraint)
         }
     }
     
@@ -110,6 +128,77 @@ extension UnaryConstraint
         case .aspectRatio(let value, let type):
             let scaledValue = metrics.scaledValue(for: value, compatibleWith: traitCollection)
             return .aspectRatio(scaledValue, type)
+        }
+    }
+}
+
+extension UnaryConstraint
+{
+    public enum Kind
+    {
+        case width(type: ConstraintType)
+        case height(type: ConstraintType)
+        case size(type: ConstraintType)
+        case aspectRatio(type: ConstraintType)
+        
+        public static var width: Kind { self.width(type: .equalTo) }
+        public static var height: Kind { self.height(type: .equalTo) }
+        public static var size: Kind { self.size(type: .equalTo) }
+        public static var aspectRatio: Kind { self.aspectRatio(type: .equalTo) }
+        
+        func with(value: CGFloat) -> UnaryConstraint
+        {
+            switch self
+            {
+            case .width(let type):
+                return .width(value, type)
+            case .height(let type):
+                return .height(value, type)
+            case .size(let type):
+                let size = CGSize(width: value, height: value)
+                return .size(size, type)
+            case .aspectRatio(let type):
+                return .aspectRatio(value, type)
+            }
+        }
+    }
+}
+
+extension BinaryConstraint
+{
+    public enum Kind
+    {
+        case leading(type: ConstraintType)
+        case trailing(type: ConstraintType)
+        case top(type: ConstraintType)
+        case bottom(type: ConstraintType)
+        case width(type: ConstraintType)
+        case height(type: ConstraintType)
+        
+        public static var leading: Kind { self.leading(type: .equalTo) }
+        public static var trailing: Kind { self.trailing(type: .equalTo) }
+        public static var top: Kind { self.top(type: .equalTo) }
+        public static var bottom: Kind { self.bottom(type: .equalTo) }
+        public static var width: Kind { self.width(type: .equalTo) }
+        public static var height: Kind { self.height(type: .equalTo) }
+        
+        func with(value: CGFloat) -> BinaryConstraint
+        {
+            switch self
+            {
+            case .leading(let type):
+                return .leading(inset: value, type)
+            case .trailing(let type):
+                return .trailing(inset: value, type)
+            case .top(let type):
+                return .top(inset: value, type)
+            case .bottom(let type):
+                return .bottom(inset: value, type)
+            case .width(let type):
+                return .width(constant: value, type)
+            case .height(let type):
+                return .height(constant: value, type)
+            }
         }
     }
 }
