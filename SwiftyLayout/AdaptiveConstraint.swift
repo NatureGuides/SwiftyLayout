@@ -84,15 +84,17 @@ public class AdaptiveConstraint: NSObject
     /// The currently applied constraints; when this is changed the previous constraints will be automatically removed.
     private var currentConstraints: [NSLayoutConstraint]
     {
-        willSet
+        didSet
         {
-            self.view.removeConstraints(self.currentConstraints)
+            self.view.removeConstraints(oldValue)
+            self.currentConstraints.forEach{ $0.isActive = true }
         }
     }
     
     public init(view: UIView, constraintsForTraitCollection: @escaping (UITraitCollection) -> [NSLayoutConstraint])
     {
         self.view = view
+        self.view.ifSafeSet(translatesAutoresizingMaskIntoConstraints: false)
         self.constraintsForTraitCollection = constraintsForTraitCollection
         self.currentConstraints = self.constraintsForTraitCollection(self.view.traitCollection)
         super.init()

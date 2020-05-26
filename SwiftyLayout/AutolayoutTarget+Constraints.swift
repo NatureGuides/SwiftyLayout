@@ -47,7 +47,7 @@ extension AutolayoutTarget
     {
         if let view = self.underlyingView
         {
-            view.translatesAutoresizingMaskIntoConstraints = false
+            view.ifSafeSet(translatesAutoresizingMaskIntoConstraints: false)
         }
         for constraint in constraints
         {

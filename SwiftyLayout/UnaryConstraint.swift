@@ -51,7 +51,7 @@ public enum UnaryConstraint
     public static let squareAspectRatio: UnaryConstraint = { .aspectRatio(1, .equalTo) }()
     
     /// Returns the `NSLayoutConstraint` objects represented by this constraint, for the given view.
-    internal func constraint(for target: AutolayoutTarget) -> [NSLayoutConstraint]
+    public func constraint(for target: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {

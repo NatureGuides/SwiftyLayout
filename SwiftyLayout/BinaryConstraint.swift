@@ -198,7 +198,7 @@ public enum BinaryConstraint
     }
     
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
-    internal func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
+    public func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {
