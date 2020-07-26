@@ -105,6 +105,7 @@ public class AdaptiveConstraint: NSObject
     /// - Note: This **must** be called by the relevant view every time the trait collection changes.
     public func traitCollectionDidChange()
     {
+        self.currentConstraints.removeAll()
         self.currentConstraints = self.constraintsForTraitCollection(self.view.traitCollection)
     }
 }
