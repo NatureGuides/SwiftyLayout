@@ -75,6 +75,22 @@ extension UIView
         return self.constrain(to: superview, priority: priority, constraints)
     }
     
+    /// Constrains this view to its superview using the given constraints.
+    @discardableResult
+    public func constrainToSuperviewLayoutMargins(priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.layoutMarginsGuide, priority: priority, constraints)
+    }
+    
+    /// Constrains this view to its superview using the given constraints.
+    @discardableResult
+    public func constrainToSuperviewLayoutMargins(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.layoutMarginsGuide, priority: priority, constraints)
+    }
+    
     /// Constrains this view to its superview's safe area using the given constraints.
     @available(iOS 11.0, *)
     @discardableResult
