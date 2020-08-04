@@ -12,6 +12,7 @@ import UIKit
 public protocol AutolayoutTarget: class
 {
     var underlyingView: UIView? { get }
+    var superview: UIView? { get }
     
     var leadingAnchor: NSLayoutXAxisAnchor { get }
     var trailingAnchor: NSLayoutXAxisAnchor { get }
@@ -39,5 +40,10 @@ extension UILayoutGuide: AutolayoutTarget
     public var underlyingView: UIView?
     {
         self.owningView
+    }
+    
+    public var superview: UIView?
+    {
+        self.owningView?.superview
     }
 }

@@ -57,7 +57,7 @@ extension AutolayoutTarget
     }
 }
 
-extension UIView
+extension AutolayoutTarget
 {
     /// Constrains this view to its superview using the given constraints.
     @discardableResult
