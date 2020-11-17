@@ -16,6 +16,8 @@ extension BinaryConstraint
         case trailing(type: ConstraintType)
         case top(type: ConstraintType)
         case bottom(type: ConstraintType)
+        case horizontallyCentered
+        case verticallyCentered
         case width(type: ConstraintType)
         case height(type: ConstraintType)
         
@@ -38,6 +40,10 @@ extension BinaryConstraint
                 return .top(inset: value, type)
             case .bottom(let type):
                 return .bottom(inset: value, type)
+            case .horizontallyCentered:
+                return .horizontallyCentered
+            case .verticallyCentered:
+                return .verticallyCentered
             case .width(let type):
                 return .width(constant: value, type)
             case .height(let type):
