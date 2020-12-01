@@ -44,11 +44,11 @@ public enum BinaryConstraint
     /// Constrains the height of one view to that of another, altered by the given multiplier and constant.
     case height(multiplier: CGFloat, constant: CGFloat, _ type: ConstraintType)
     
-    /// Horizontally centers one view inside another.
-    case horizontallyCentered
+    /// Horizontally centers one view inside another, offset by the given amount.
+    case horizontallyCentered(offset: CGFloat)
     
-    /// Vertically centers one view inside another.
-    case verticallyCentered
+    /// Vertically centers one view inside another, offset by the given amount.
+    case verticallyCentered(offset: CGFloat)
     
     public static func fill(inset: CGFloat) -> BinaryConstraint
     {
@@ -197,6 +197,12 @@ public enum BinaryConstraint
         .height(multiplier: 1, constant: constant, type)
     }
     
+    /// Horizontally centers one view inside another.
+    public static let horizontallyCentered = BinaryConstraint.horizontallyCentered(offset: 0)
+    
+    /// Vertically centers one view inside another.
+    public static let verticallyCentered = BinaryConstraint.verticallyCentered(offset: 0)
+    
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
     public func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
     {
@@ -229,10 +235,10 @@ public enum BinaryConstraint
             return [lhs.widthAnchor.constraint(to: rhs.widthAnchor, type: type, multiplier: multiplier, constant: constant)]
         case .height(let multiplier, let constant, let type):
             return [lhs.heightAnchor.constraint(to: rhs.heightAnchor, type: type, multiplier: multiplier, constant: constant)]
-        case .horizontallyCentered:
-            return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor)]
-        case .verticallyCentered:
-            return [lhs.centerYAnchor.constraint(equalTo: rhs.centerYAnchor)]
+        case .horizontallyCentered(let offset):
+            return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor, constant: offset)]
+        case .verticallyCentered(let offset):
+            return [lhs.centerYAnchor.constraint(equalTo: rhs.centerYAnchor, constant: offset)]
         }
     }
 }
