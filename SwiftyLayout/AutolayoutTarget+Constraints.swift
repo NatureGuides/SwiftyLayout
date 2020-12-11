@@ -108,4 +108,22 @@ extension AutolayoutTarget
         guard let superview = self.superview else { return [] }
         return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, constraints)
     }
+    
+    /// Constrains this view to its superview's readable content guide using the given constraints.
+    @available(iOS 11.0, *)
+    @discardableResult
+    public func constrainToSuperviewReadableGuide(priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.readableContentGuide, priority: priority, constraints)
+    }
+    
+    /// Constrains this view to its superview's readable content guide using the given constraints.
+    @available(iOS 11.0, *)
+    @discardableResult
+    public func constrainToSuperviewReadableGuide(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.readableContentGuide, priority: priority, constraints)
+    }
 }
