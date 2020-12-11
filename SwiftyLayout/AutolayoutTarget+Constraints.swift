@@ -110,7 +110,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to its superview's readable content guide using the given constraints.
-    @available(iOS 11.0, *)
     @discardableResult
     public func constrainToSuperviewReadableGuide(priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
     {
@@ -119,7 +118,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to its superview's readable content guide using the given constraints.
-    @available(iOS 11.0, *)
     @discardableResult
     public func constrainToSuperviewReadableGuide(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
