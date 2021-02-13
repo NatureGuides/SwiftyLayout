@@ -12,17 +12,17 @@ import UIKit
 /// - Note: `traitCollectionDidChange` **must** be called by the relevant view every time the trait collection changes.
 public class AdaptiveConstraint: NSObject
 {
-    public static func `for`(_ view: UIView, _ kind: UnaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    public static func `for`(_ view: UIView, _ kind: UnaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constant = value.value(for: traitCollection)
             let constraint = kind.with(value: constant)
-            return view.constrain(constraint)
+            return view.constrain(priority: priority, constraint)
         }
     }
     
     /// Constrains the given view by different constraints in regular and compact environments.
-    public static func `for`(_ view: UIView, regular: UnaryConstraint, compact: UnaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    public static func `for`(_ view: UIView, regular: UnaryConstraint, compact: UnaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constraint: UnaryConstraint
@@ -35,21 +35,21 @@ public class AdaptiveConstraint: NSObject
             @unknown default:
                 constraint = regular
             }
-            return view.constrain(constraint)
+            return view.constrain(priority: priority, constraint)
         }
     }
     
-    public static func between(_ view: UIView, and otherView: AutolayoutTarget, _ kind: BinaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    public static func between(_ view: UIView, and otherView: AutolayoutTarget, _ kind: BinaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constant = value.value(for: traitCollection)
             let constraint = kind.with(value: constant)
-            return view.constrain(to: otherView, constraint)
+            return view.constrain(to: otherView, priority: priority, constraint)
         }
     }
     
     /// Constrains between the two given views by different constraints in regular and compact environments.
-    public static func between(_ view: UIView, and otherView: AutolayoutTarget, regular: BinaryConstraint, compact: BinaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal) -> AdaptiveConstraint
+    public static func between(_ view: UIView, and otherView: AutolayoutTarget, regular: BinaryConstraint, compact: BinaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constraint: BinaryConstraint
@@ -62,16 +62,16 @@ public class AdaptiveConstraint: NSObject
             @unknown default:
                 constraint = regular
             }
-            return view.constrain(to: otherView, constraint)
+            return view.constrain(to: otherView, priority: priority, constraint)
         }
     }
     
     @available(iOS 11.0, *)
-    public static func scale(_ constraint: UnaryConstraint, with textStyle: UIFont.TextStyle, for view: UIView) -> AdaptiveConstraint
+    public static func scale(_ constraint: UnaryConstraint, priority: UILayoutPriority = .required, with textStyle: UIFont.TextStyle, for view: UIView) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let scaledConstraint = constraint.scaled(by: textStyle)
-            return view.constrain(scaledConstraint)
+            return view.constrain(priority: priority, scaledConstraint)
         }
     }
     
@@ -87,6 +87,10 @@ public class AdaptiveConstraint: NSObject
         didSet
         {
             self.view.removeConstraints(oldValue)
+            for constraint in self.currentConstraints
+            {
+                constraint.isActive = true
+            }
             self.currentConstraints.forEach{ $0.isActive = true }
         }
     }
