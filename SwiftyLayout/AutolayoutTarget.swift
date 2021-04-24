@@ -9,7 +9,7 @@
 import UIKit
 
 /// A protocol to allow us to mix and match between UIViews and UILayoutGuides.
-public protocol AutolayoutTarget: class
+public protocol AutolayoutTarget: AnyObject
 {
     var underlyingView: UIView? { get }
     var superview: UIView? { get }
