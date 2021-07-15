@@ -20,6 +20,10 @@ extension BinaryConstraint
         case verticallyCentered
         case width(type: ConstraintType)
         case height(type: ConstraintType)
+        case verticalSpacingTop(type: ConstraintType)
+        case verticalSpacingBottom(type: ConstraintType)
+        case horizontalSpacingLeading(type: ConstraintType)
+        case horizontalSpacingTrailing(type: ConstraintType)
         
         public static var leading: Kind { self.leading(type: .equalTo) }
         public static var trailing: Kind { self.trailing(type: .equalTo) }
@@ -27,6 +31,10 @@ extension BinaryConstraint
         public static var bottom: Kind { self.bottom(type: .equalTo) }
         public static var width: Kind { self.width(type: .equalTo) }
         public static var height: Kind { self.height(type: .equalTo) }
+        public static var verticalSpacingTop: Kind { self.verticalSpacingTop(type: .equalTo) }
+        public static var verticalSpacingBottom: Kind { self.verticalSpacingBottom(type: .equalTo) }
+        public static var horizontalSpacingLeading: Kind { self.horizontalSpacingLeading(type: .equalTo) }
+        public static var horizontalSpacingTrailing: Kind { self.horizontalSpacingTrailing(type: .equalTo) }
         
         func with(value: CGFloat) -> BinaryConstraint
         {
@@ -48,6 +56,14 @@ extension BinaryConstraint
                 return .width(constant: value, type)
             case .height(let type):
                 return .height(constant: value, type)
+            case .verticalSpacingTop(let type):
+                return .verticalSpacingTop(value, type)
+            case .verticalSpacingBottom(let type):
+                return .verticalSpacingBottom(value, type)
+            case .horizontalSpacingLeading(let type):
+                return .horizontalSpacingLeading(value, type)
+            case .horizontalSpacingTrailing(let type):
+                return .horizontalSpacingTrailing(value, type)
             }
         }
     }
