@@ -48,6 +48,14 @@ public class AdaptiveConstraint: NSObject
         }
     }
     
+    public static func fillBetween(_ view: UIView, and otherView: AutolayoutTarget, _ kind: BinaryConstraint.Kind, _ value: SizeClassDependant<UIEdgeInsets>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
+    {
+        AdaptiveConstraint(view: view) { traitCollection in
+            let constant = value.value(for: traitCollection)
+            return view.constrain(to: otherView, .fill(insets: constant))
+        }
+    }
+    
     /// Constrains between the two given views by different constraints in regular and compact environments.
     public static func between(_ view: UIView, and otherView: AutolayoutTarget, regular: BinaryConstraint, compact: BinaryConstraint, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
