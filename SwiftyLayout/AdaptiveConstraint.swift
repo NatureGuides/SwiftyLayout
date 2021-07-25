@@ -48,7 +48,7 @@ public class AdaptiveConstraint: NSObject
         }
     }
     
-    public static func fillBetween(_ view: UIView, and otherView: AutolayoutTarget, _ kind: BinaryConstraint.Kind, _ value: SizeClassDependant<UIEdgeInsets>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
+    public static func fillBetween(_ view: UIView, and otherView: AutolayoutTarget, _ value: SizeClassDependant<UIEdgeInsets>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
             let constant = value.value(for: traitCollection)
