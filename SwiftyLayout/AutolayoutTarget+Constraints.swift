@@ -26,6 +26,13 @@ extension AutolayoutTarget
         return self.constrain(to: other, priority: priority, constraints)
     }
     
+    /// Constrains this view to fill another.
+    @discardableResult
+    public func fill(to other: AutolayoutTarget, priority: UILayoutPriority = .required, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
+    {
+        return self.constrain(to: other, priority: priority, .fill(insets: insets))
+    }
+    
     /// Constrains this view using the given constraints.
     @discardableResult
     fileprivate func constrain(priority: UILayoutPriority = .required, _ constraints: [UnaryConstraint]) -> [NSLayoutConstraint]
@@ -75,7 +82,15 @@ extension AutolayoutTarget
         return self.constrain(to: superview, priority: priority, constraints)
     }
     
-    /// Constrains this view to its superview using the given constraints.
+    /// Constrains this view to fill its superview.
+    @discardableResult
+    public func fillToSuperview(priority: UILayoutPriority = .required, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview, priority: priority, .fill(insets: insets))
+    }
+    
+    /// Constrains this view to its superview's layout margins using the given constraints.
     @discardableResult
     public func constrainToSuperviewLayoutMargins(priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
     {
@@ -83,12 +98,20 @@ extension AutolayoutTarget
         return self.constrain(to: superview.layoutMarginsGuide, priority: priority, constraints)
     }
     
-    /// Constrains this view to its superview using the given constraints.
+    /// Constrains this view to its superview's layout margins using the given constraints.
     @discardableResult
     public func constrainToSuperviewLayoutMargins(priority: UILayoutPriority = .required, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
         guard let superview = self.superview else { return [] }
         return self.constrain(to: superview.layoutMarginsGuide, priority: priority, constraints)
+    }
+    
+    /// Constrains this view to fill its superview's layout margins.
+    @discardableResult
+    public func fillToSuperviewLayoutMargins(priority: UILayoutPriority = .required, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.layoutMarginsGuide, priority: priority, .fill(insets: insets))
     }
     
     /// Constrains this view to its superview's safe area using the given constraints.
@@ -109,6 +132,15 @@ extension AutolayoutTarget
         return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, constraints)
     }
     
+    /// Constrains this view to fill its superview's safe area.
+    @available(iOS 11.0, *)
+    @discardableResult
+    public func fillToSuperviewSafeArea(priority: UILayoutPriority = .required, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.safeAreaLayoutGuide, priority: priority, .fill(insets: insets))
+    }
+    
     /// Constrains this view to its superview's readable content guide using the given constraints.
     @discardableResult
     public func constrainToSuperviewReadableGuide(priority: UILayoutPriority = .required, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
@@ -123,5 +155,13 @@ extension AutolayoutTarget
     {
         guard let superview = self.superview else { return [] }
         return self.constrain(to: superview.readableContentGuide, priority: priority, constraints)
+    }
+    
+    /// Constrains this view to fill its superview's readable content guide.
+    @discardableResult
+    public func fillToSuperviewReadableGuide(priority: UILayoutPriority = .required, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
+    {
+        guard let superview = self.superview else { return [] }
+        return self.constrain(to: superview.readableContentGuide, priority: priority, .fill(insets: insets))
     }
 }
