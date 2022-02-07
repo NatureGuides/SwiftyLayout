@@ -50,6 +50,9 @@ public enum BinaryConstraint
     /// Vertically centers one view inside another, offset by the given amount.
     case verticallyCentered(offset: CGFloat)
     
+    /// Horizontally and vertically centers one view inside another.
+    case centered
+    
     public static func fill(inset: CGFloat) -> BinaryConstraint
     {
         let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
@@ -239,6 +242,9 @@ public enum BinaryConstraint
             return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor, constant: offset)]
         case .verticallyCentered(let offset):
             return [lhs.centerYAnchor.constraint(equalTo: rhs.centerYAnchor, constant: offset)]
+        case .centered:
+            return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor),
+                    lhs.centerYAnchor.constraint(equalTo: rhs.centerYAnchor)]
         }
     }
 }
