@@ -44,6 +44,9 @@ public enum BinaryConstraint
     /// Constrains the height of one view to that of another, altered by the given multiplier and constant.
     case height(multiplier: CGFloat, constant: CGFloat, _ type: ConstraintType)
     
+    /// Constrains the width and height of one view to that of another, altered by the given multiplier and constant.
+    case size(multiplier: CGFloat, constant: CGSize, _ type: ConstraintType)
+    
     /// Horizontally centers one view inside another, offset by the given amount.
     case horizontallyCentered(offset: CGFloat)
     
@@ -200,6 +203,27 @@ public enum BinaryConstraint
         .height(multiplier: 1, constant: constant, type)
     }
     
+    /// Constrains the width and height of one view to that of another.
+    public static let size: BinaryConstraint = { .size(multiplier: 1, constant: .zero, .equalTo) }()
+    
+    /// Constrains the width and height of one view to that of another.
+    public static func size(_ type: ConstraintType) -> BinaryConstraint
+    {
+        .size(multiplier: 1, constant: .zero, type)
+    }
+    
+    /// Constrains the width and height of one view to that of another, altered by the given multiplier.
+    public static func size(multiplier: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
+    {
+        .size(multiplier: multiplier, constant: .zero, type)
+    }
+    
+    /// Constrains the width and height of one view to that of another, altered by the given constant.
+    public static func size(constant: CGSize, _ type: ConstraintType = .equalTo) -> BinaryConstraint
+    {
+        .size(multiplier: 1, constant: constant, type)
+    }
+    
     /// Horizontally centers one view inside another.
     public static let horizontallyCentered = BinaryConstraint.horizontallyCentered(offset: 0)
     
@@ -238,6 +262,8 @@ public enum BinaryConstraint
             return [lhs.widthAnchor.constraint(to: rhs.widthAnchor, type: type, multiplier: multiplier, constant: constant)]
         case .height(let multiplier, let constant, let type):
             return [lhs.heightAnchor.constraint(to: rhs.heightAnchor, type: type, multiplier: multiplier, constant: constant)]
+        case .size(let multiplier, let constant, let type):
+            return [lhs.heightAnchor.constraint(to: rhs.heightAnchor, type: type, multiplier: multiplier, constant: constant.height), lhs.widthAnchor.constraint(to: rhs.widthAnchor, type: type, multiplier: multiplier, constant: constant.width)]
         case .horizontallyCentered(let offset):
             return [lhs.centerXAnchor.constraint(equalTo: rhs.centerXAnchor, constant: offset)]
         case .verticallyCentered(let offset):
