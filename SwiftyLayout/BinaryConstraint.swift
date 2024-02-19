@@ -78,11 +78,17 @@ public enum BinaryConstraint
     /// Constrains the trailing edge of one view to that of another.
     public static let trailing: BinaryConstraint = { .trailing(inset: 0) }()
     
+    /// Constrains the leading and trailing edges of one view to those of another.
+    public static let horizontal: BinaryConstraint = { .horizontal(inset: 0) }()
+    
     /// Constrains the top edge of one view to that of another.
     public static let top: BinaryConstraint = { .top(inset: 0) }()
     
     /// Constrains the bottom edge of one view to that of another.
     public static let bottom: BinaryConstraint = { .bottom(inset: 0) }()
+    
+    /// Constrains the top and bottom edges of one view to those of another.
+    public static let vertical: BinaryConstraint = { .vertical(inset: 0) }()
     
     /// Constraints the top of one view to the bottom of another.
     public static let verticalSpacingTop: BinaryConstraint = { .verticalSpacingTop(0) }()
