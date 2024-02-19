@@ -15,37 +15,37 @@ public enum BinaryConstraint
     case fill(insets: UIEdgeInsets)
     
     /// Constrains the leading edge of one view to that of another, inset by a given value.
-    case leading(inset: CGFloat, _ type: ConstraintType)
+    case leading(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains the trailing edge of one view to that of another, inset by a given value.
-    case trailing(inset: CGFloat, _ type: ConstraintType)
+    case trailing(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains the top edge of one view to that of another, inset by a given value.
-    case top(inset: CGFloat, _ type: ConstraintType)
+    case top(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains the bottom edge of one view to that of another, inset by a given value.
-    case bottom(inset: CGFloat, _ type: ConstraintType)
+    case bottom(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constraints the top of one view to the bottom of another, padded by a given value.
-    case verticalSpacingTop(_: CGFloat, _ type: ConstraintType)
+    case verticalSpacingTop(_: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constraints the bottom of one view to the top of another, padded by a given value.
-    case verticalSpacingBottom(_: CGFloat, _ type: ConstraintType)
+    case verticalSpacingBottom(_: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constraints the leading edge of one view to the trailing edge of another, padded by a given value.
-    case horizontalSpacingLeading(_: CGFloat, _ type: ConstraintType)
+    case horizontalSpacingLeading(_: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constraints the trailing edge of one view to the leading edge of another, padded by a given value.
-    case horizontalSpacingTrailing(_: CGFloat, _ type: ConstraintType)
+    case horizontalSpacingTrailing(_: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains the width of one view to that of another, altered by the given multiplier and constant.
-    case width(multiplier: CGFloat, constant: CGFloat, _ type: ConstraintType)
+    case width(multiplier: CGFloat = 1, constant: CGFloat = 0, _ type: ConstraintType = .equalTo)
     
     /// Constrains the height of one view to that of another, altered by the given multiplier and constant.
-    case height(multiplier: CGFloat, constant: CGFloat, _ type: ConstraintType)
+    case height(multiplier: CGFloat = 1, constant: CGFloat = 0, _ type: ConstraintType = .equalTo)
     
     /// Constrains the width and height of one view to that of another, altered by the given multiplier and constant.
-    case size(multiplier: CGFloat, constant: CGSize, _ type: ConstraintType)
+    case size(multiplier: CGFloat = 1, constant: CGSize = .zero, _ type: ConstraintType = .equalTo)
     
     /// Horizontally centers one view inside another, offset by the given amount.
     case horizontallyCentered(offset: CGFloat)
@@ -56,6 +56,7 @@ public enum BinaryConstraint
     /// Horizontally and vertically centers one view inside another.
     case centered
     
+    /// Constrains all four edges of one view to those of another, using the given inset for each edge.
     public static func fill(inset: CGFloat) -> BinaryConstraint
     {
         let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
@@ -66,163 +67,37 @@ public enum BinaryConstraint
     public static let fill: BinaryConstraint = { .fill(insets: .zero) }()
     
     /// Constrains the leading edge of one view to that of another.
-    public static func leading(inset: CGFloat) -> BinaryConstraint
-    {
-        .leading(inset: inset, .equalTo)
-    }
-    
-    /// Constrains the leading edge of one view to that of another.
-    public static func leading(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .leading(inset: 0, type)
-    }
-    
-    /// Constrains the leading edge of one view to that of another.
-    public static let leading: BinaryConstraint = { .leading(inset: 0, .equalTo) }()
-    
-    /// Constrains the leading edge of one view to that of another.
-    public static func trailing(inset: CGFloat) -> BinaryConstraint
-    {
-        .trailing(inset: inset, .equalTo)
-    }
+    public static let leading: BinaryConstraint = { .leading(inset: 0) }()
     
     /// Constrains the trailing edge of one view to that of another.
-    public static func trailing(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .trailing(inset: 0, type)
-    }
-    
-    /// Constrains the trailing edge of one view to that of another.
-    public static let trailing: BinaryConstraint = { .trailing(inset: 0, .equalTo) }()
+    public static let trailing: BinaryConstraint = { .trailing(inset: 0) }()
     
     /// Constrains the top edge of one view to that of another.
-    public static func top(inset: CGFloat) -> BinaryConstraint
-    {
-        .top(inset: inset, .equalTo)
-    }
-    
-    /// Constrains the top edge of one view to that of another.
-    public static func top(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .top(inset: 0, type)
-    }
-    
-    /// Constrains the top edge of one view to that of another.
-    public static let top: BinaryConstraint = { .top(inset: 0, .equalTo) }()
+    public static let top: BinaryConstraint = { .top(inset: 0) }()
     
     /// Constrains the bottom edge of one view to that of another.
-    public static func bottom(inset: CGFloat) -> BinaryConstraint
-    {
-        .bottom(inset: inset, .equalTo)
-    }
-    
-    /// Constrains the bottom edge of one view to that of another.
-    public static func bottom(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .bottom(inset: 0, type)
-    }
-    
-    /// Constrains the bottom edge of one view to that of another.
-    public static let bottom: BinaryConstraint = { .bottom(inset: 0, .equalTo) }()
+    public static let bottom: BinaryConstraint = { .bottom(inset: 0) }()
     
     /// Constraints the top of one view to the bottom of another.
-    public static let verticalSpacingTop: BinaryConstraint = { .verticalSpacingTop(0, .equalTo) }()
-    
-    /// Constraints the top of one view to the bottom of another, padded by a given value.
-    public static func verticalSpacingTop(_ value: CGFloat) -> BinaryConstraint
-    {
-        .verticalSpacingTop(value, .equalTo)
-    }
+    public static let verticalSpacingTop: BinaryConstraint = { .verticalSpacingTop(0) }()
     
     /// Constraints the bottom of one view to the top of another.
-    public static let verticalSpacingBottom: BinaryConstraint = { .verticalSpacingBottom(0, .equalTo) }()
-    
-    /// Constraints the bottom of one view to the top of another, padded by a given value.
-    public static func verticalSpacingBottom(_ value: CGFloat) -> BinaryConstraint
-    {
-        .verticalSpacingBottom(value, .equalTo)
-    }
+    public static let verticalSpacingBottom: BinaryConstraint = { .verticalSpacingBottom(0) }()
     
     /// Constraints the leading edge of one view to the trailing edge of another.
-    public static let horizontalSpacingLeading: BinaryConstraint = { .horizontalSpacingLeading(0, .equalTo) }()
-    
-    /// Constraints the leading edge of one view to the trailing edge of another, padded by a given value.
-    public static func horizontalSpacingLeading(_ value: CGFloat) -> BinaryConstraint
-    {
-        .horizontalSpacingLeading(value, .equalTo)
-    }
+    public static let horizontalSpacingLeading: BinaryConstraint = { .horizontalSpacingLeading(0) }()
     
     /// Constraints the trailing edge of one view to the leading edge of another.
-    public static let horizontalSpacingTrailing: BinaryConstraint = { .horizontalSpacingTrailing(0, .equalTo) }()
-    
-    /// Constraints the trailing edge of one view to the leading edge of another, padded by a given value.
-    public static func horizontalSpacingTrailing(_ value: CGFloat) -> BinaryConstraint
-    {
-        .horizontalSpacingLeading(value, .equalTo)
-    }
+    public static let horizontalSpacingTrailing: BinaryConstraint = { .horizontalSpacingTrailing(0) }()
     
     /// Constrains the width of one view to that of another.
-    public static let width: BinaryConstraint = { .width(multiplier: 1, constant: 0, .equalTo) }()
-    
-    /// Constrains the width of one view to that of another.
-    public static func width(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .width(multiplier: 1, constant: 0, type)
-    }
-    
-    /// Constrains the width of one view to that of another, altered by the given multiplier.
-    public static func width(multiplier: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .width(multiplier: multiplier, constant: 0, type)
-    }
-    
-    /// Constrains the width of one view to that of another, altered by the given constant.
-    public static func width(constant: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .width(multiplier: 1, constant: constant, type)
-    }
+    public static let width: BinaryConstraint = { .width() }()
     
     /// Constrains the height of one view to that of another.
-    public static let height: BinaryConstraint = { .height(multiplier: 1, constant: 0, .equalTo) }()
-    
-    /// Constrains the height of one view to that of another.
-    public static func height(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .height(multiplier: 1, constant: 0, type)
-    }
-    
-    /// Constrains the height of one view to that of another, altered by the given multiplier.
-    public static func height(multiplier: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .height(multiplier: multiplier, constant: 0, type)
-    }
-    
-    /// Constrains the height of one view to that of another, altered by the given constant.
-    public static func height(constant: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .height(multiplier: 1, constant: constant, type)
-    }
+    public static let height: BinaryConstraint = { .height() }()
     
     /// Constrains the width and height of one view to that of another.
-    public static let size: BinaryConstraint = { .size(multiplier: 1, constant: .zero, .equalTo) }()
-    
-    /// Constrains the width and height of one view to that of another.
-    public static func size(_ type: ConstraintType) -> BinaryConstraint
-    {
-        .size(multiplier: 1, constant: .zero, type)
-    }
-    
-    /// Constrains the width and height of one view to that of another, altered by the given multiplier.
-    public static func size(multiplier: CGFloat, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .size(multiplier: multiplier, constant: .zero, type)
-    }
-    
-    /// Constrains the width and height of one view to that of another, altered by the given constant.
-    public static func size(constant: CGSize, _ type: ConstraintType = .equalTo) -> BinaryConstraint
-    {
-        .size(multiplier: 1, constant: constant, type)
-    }
+    public static let size: BinaryConstraint = { .size() }()
     
     /// Horizontally centers one view inside another.
     public static let horizontallyCentered = BinaryConstraint.horizontallyCentered(offset: 0)

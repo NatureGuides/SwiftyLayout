@@ -12,40 +12,16 @@ import UIKit
 public enum UnaryConstraint
 {
     /// Constrains a view to a given width.
-    case width(_ value: CGFloat, _ type: ConstraintType)
+    case width(_ value: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains a view to a given height.
-    case height(_ value: CGFloat, _ type: ConstraintType)
+    case height(_ value: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains a view to a given size.
-    case size(_ value: CGSize, _ type: ConstraintType)
+    case size(_ value: CGSize, _ type: ConstraintType = .equalTo)
     
     /// Constrains a view to a given aspect ratio.
-    case aspectRatio(_ value: CGFloat, _ type: ConstraintType)
-    
-    /// Constrains a view to a given width.
-    public static func width(_ value: CGFloat) -> UnaryConstraint
-    {
-        .width(value, .equalTo)
-    }
-    
-    /// Constrains a view to a given height.
-    public static func height(_ value: CGFloat) -> UnaryConstraint
-    {
-        .height(value, .equalTo)
-    }
-    
-    /// Constrains a view to a given size.
-    public static func size(_ value: CGSize) -> UnaryConstraint
-    {
-        .size(value, .equalTo)
-    }
-    
-    /// Constrains a view to a given aspect ratio.
-    public static func aspectRatio(_ value: CGFloat) -> UnaryConstraint
-    {
-        .aspectRatio(value, .equalTo)
-    }
+    case aspectRatio(_ value: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains a view to a square aspect ratio.
     public static let squareAspectRatio: UnaryConstraint = { .aspectRatio(1, .equalTo) }()
