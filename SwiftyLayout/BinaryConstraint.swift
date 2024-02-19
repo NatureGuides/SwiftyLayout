@@ -20,11 +20,17 @@ public enum BinaryConstraint
     /// Constrains the trailing edge of one view to that of another, inset by a given value.
     case trailing(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
+    /// Constrains the leading and trailing edges of one view to those of another, inset by a given value.
+    case horizontal(inset: CGFloat, type: ConstraintType = .equalTo)
+    
     /// Constrains the top edge of one view to that of another, inset by a given value.
     case top(inset: CGFloat, _ type: ConstraintType = .equalTo)
     
     /// Constrains the bottom edge of one view to that of another, inset by a given value.
     case bottom(inset: CGFloat, _ type: ConstraintType = .equalTo)
+    
+    /// Constrains the top and bottom edges of one view to those of another, inset by a given value.
+    case vertical(inset: CGFloat, type: ConstraintType = .equalTo)
     
     /// Constraints the top of one view to the bottom of another, padded by a given value.
     case verticalSpacingTop(_: CGFloat, _ type: ConstraintType = .equalTo)
@@ -121,10 +127,14 @@ public enum BinaryConstraint
             return [lhs.leadingAnchor.constraint(to: rhs.leadingAnchor, type: type, constant: inset)]
         case .trailing(let inset, let type):
             return [lhs.trailingAnchor.constraint(to: rhs.trailingAnchor, type: type, constant: -inset)]
+        case .horizontal(let inset, let type):
+            return [lhs.leadingAnchor.constraint(to: rhs.leadingAnchor, type: type, constant: -inset), lhs.trailingAnchor.constraint(to: rhs.trailingAnchor, type: type, constant: -inset)]
         case .top(let inset, let type):
             return [lhs.topAnchor.constraint(to: rhs.topAnchor, type: type, constant: inset)]
         case .bottom(let inset, let type):
             return [lhs.bottomAnchor.constraint(to: rhs.bottomAnchor, type: type, constant: -inset)]
+        case .vertical(let inset, let type):
+            return [lhs.topAnchor.constraint(to: rhs.topAnchor, type: type, constant: -inset), lhs.bottomAnchor.constraint(to: rhs.bottomAnchor, type: type, constant: -inset)]
         case .verticalSpacingTop(let padding, let type):
             return [lhs.topAnchor.constraint(to: rhs.bottomAnchor, type: type, constant: padding)]
         case .verticalSpacingBottom(let padding, let type):
