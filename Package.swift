@@ -1,11 +1,14 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.10
 
 import PackageDescription
 
 let package = Package(
     name: "SwiftyLayout",
-    platforms: [.iOS(.v9),
-                .tvOS(.v9)],
+    platforms: [.iOS(.v12),
+                .tvOS(.v12),
+                .visionOS(.v1),
+                .macCatalyst(.v13),
+    ],
     products: [
         .library(name: "SwiftyLayout", targets: ["SwiftyLayout"])
     ],
