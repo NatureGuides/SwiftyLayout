@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UILayoutPriority: ExpressibleByIntegerLiteral
+extension UILayoutPriority: @retroactive ExpressibleByIntegerLiteral
 {
     public typealias IntegerLiteralType = Int
     
