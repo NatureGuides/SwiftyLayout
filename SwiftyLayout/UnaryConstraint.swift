@@ -9,7 +9,7 @@
 import UIKit
 
 /// A constraint involving only one view.
-public enum UnaryConstraint
+public enum UnaryConstraint: Sendable
 {
     /// Constrains a view to a given width.
     case width(_ value: CGFloat, _ type: ConstraintType = .equalTo)
@@ -27,7 +27,7 @@ public enum UnaryConstraint
     public static let squareAspectRatio: UnaryConstraint = { .aspectRatio(1, .equalTo) }()
     
     /// Returns the `NSLayoutConstraint` objects represented by this constraint, for the given view.
-    public func constraint(for target: AutolayoutTarget) -> [NSLayoutConstraint]
+    @MainActor public func constraint(for target: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {

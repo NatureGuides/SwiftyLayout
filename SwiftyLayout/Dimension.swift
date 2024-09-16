@@ -11,7 +11,7 @@ import UIKit
 extension UIUserInterfaceSizeClass
 {
     /// The dimension of a size class.
-    public enum Dimension
+    public enum Dimension: Sendable
     {
         case horiziontal, vertical
         
@@ -28,7 +28,7 @@ extension UIUserInterfaceSizeClass
         }
         
         /// The size class representing this dimension for the given trait environment such as a `UIView`.
-        public func sizeClass(from environment: UITraitEnvironment) -> UIUserInterfaceSizeClass
+        @MainActor public func sizeClass(from environment: UITraitEnvironment) -> UIUserInterfaceSizeClass
         {
             return self.sizeClass(from: environment.traitCollection)
         }

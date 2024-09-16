@@ -9,7 +9,7 @@
 import UIKit
 
 /// A type to apply to a Unary or Binary constraint.
-@objc public enum ConstraintType: Int
+@objc public enum ConstraintType: Int, Sendable
 {
     case equalTo, lessThanOrEqualTo, greaterThanOrEqualTo
 }

@@ -29,7 +29,7 @@ public struct SizeClassDependant<T>
     public var dimension: UIUserInterfaceSizeClass.Dimension
     
     /// The value for the given trait environment, such as `UIView`.
-    public func value(for environment: UITraitEnvironment) -> T
+    @MainActor public func value(for environment: UITraitEnvironment) -> T
     {
         self.value(for: environment.traitCollection)
     }

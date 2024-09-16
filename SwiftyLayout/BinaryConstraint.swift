@@ -9,7 +9,7 @@
 import UIKit
 
 /// A constraint involving two views.
-public enum BinaryConstraint
+public enum BinaryConstraint: Sendable
 {
     /// Constrains all four edges of one view to those of another, inset on each edge by a given value.
     case fill(insets: UIEdgeInsets)
@@ -118,7 +118,7 @@ public enum BinaryConstraint
     public static let verticallyCentered = BinaryConstraint.verticallyCentered(offset: 0)
     
     /// Returns the multiple `NSLayoutConstraint` objects represented by this constraint, for the given two views.
-    public func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
+    @MainActor public func constraints(between lhs: AutolayoutTarget, and rhs: AutolayoutTarget) -> [NSLayoutConstraint]
     {
         switch self
         {

@@ -10,7 +10,7 @@ import UIKit
 
 /// A UI constraint that adapts to `UITraitCollection` changes.
 /// - Note: `traitCollectionDidChange` **must** be called by the relevant view every time the trait collection changes.
-public class AdaptiveConstraint: NSObject
+@MainActor public class AdaptiveConstraint: NSObject
 {
     public static func `for`(_ view: UIView, _ kind: UnaryConstraint.Kind, _ value: SizeClassDependant<CGFloat>, dimension: UIUserInterfaceSizeClass.Dimension = .horiziontal, priority: UILayoutPriority = .required) -> AdaptiveConstraint
     {
