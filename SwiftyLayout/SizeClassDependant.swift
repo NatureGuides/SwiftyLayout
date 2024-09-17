@@ -55,3 +55,5 @@ public struct SizeClassDependant<T>
         }
     }
 }
+
+extension SizeClassDependant: Sendable where T: Sendable { }
