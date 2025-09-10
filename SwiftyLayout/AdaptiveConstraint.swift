@@ -74,7 +74,6 @@ import UIKit
         }
     }
     
-    @available(iOS 11.0, *)
     public static func scale(_ constraint: UnaryConstraint, priority: UILayoutPriority = .required, with textStyle: UIFont.TextStyle, for view: UIView) -> AdaptiveConstraint
     {
         AdaptiveConstraint(view: view) { traitCollection in
@@ -124,7 +123,6 @@ import UIKit
 
 extension UnaryConstraint
 {
-    @available(iOS 11.0, *)
     func scaled(by textStyle: UIFont.TextStyle, compatibleWith traitCollection: UITraitCollection? = nil) -> UnaryConstraint
     {
         let metrics = UIFontMetrics(forTextStyle: textStyle)

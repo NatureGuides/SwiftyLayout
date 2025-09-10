@@ -137,7 +137,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to its superview's safe area using the given constraints.
-    @available(iOS 11.0, *)
     @discardableResult
     public func constrainToSuperviewSafeArea(priority: UILayoutPriority = .required, doNotActivate: Bool = false, _ constraints: [BinaryConstraint]) -> [NSLayoutConstraint]
     {
@@ -146,7 +145,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to its superview's safe area using the given constraints.
-    @available(iOS 11.0, *)
     @discardableResult
     public func constrainToSuperviewSafeArea(priority: UILayoutPriority = .required, doNotActivate: Bool = false, _ constraints: BinaryConstraint...) -> [NSLayoutConstraint]
     {
@@ -155,7 +153,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to fill its superview's safe area.
-    @available(iOS 11.0, *)
     @discardableResult
     public func fillToSuperviewSafeArea(priority: UILayoutPriority = .required, doNotActivate: Bool = false, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint]
     {
@@ -164,7 +161,6 @@ extension AutolayoutTarget
     }
     
     /// Constrains this view to fill its superview's safe area.
-    @available(iOS 11.0, *)
     @discardableResult
     public func fillToSuperviewSafeArea(priority: UILayoutPriority = .required, doNotActivate: Bool = false, inset: CGFloat) -> [NSLayoutConstraint]
     {
